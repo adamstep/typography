@@ -1,8 +1,8 @@
 var styles = {
-    headline : {color : 'black' , fontSize : 10 , marginTop : 0 , marginBottom : 0} ,
-    byline   : {color : 'black' , fontSize : 10 , marginTop : 0 , marginBottom : 0} ,
-    dateline : {color : 'black' , fontSize : 10 , marginTop : 0 , marginBottom : 0} ,
-    body     : {color : 'black' , fontSize : 10 , marginTop : 0 , marginBottom : 0} ,
+    headline : {},
+    byline   : {},
+    dateline : {},
+    body     : {},
 };
 
 var text = [
