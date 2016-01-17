@@ -17,7 +17,7 @@ body {
   float: left;
   padding-right: 40px;
   color: #aaa;
-  width: 140px;
+  width: 180px;
 }
 .playground .control-group {
   position: relative;
@@ -34,10 +34,15 @@ body {
   color: #fff;
 }
 .playground .control-panel h5:after {
-  content: '-';
+  content: '–';
   opacity: 0.5;
   position: absolute;
   right: 0;
+  font-weight: bold;
+  background: #555;
+  border-radius: 100%;
+  width: 17px;
+  text-align: center;
 }
 .playground .control-panel .control-group.close h5:after {
   content: '+';
@@ -49,6 +54,9 @@ body {
 }
 .playground .control-panel .control-group.close .controls {
   max-height: 0;
+}
+.playground .control-panel .control {
+  clear: both;
 }
 .playground .control-panel label {
   text-transform: uppercase;

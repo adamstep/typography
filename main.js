@@ -173,7 +173,7 @@ function updateControls(playgroundSelector, data) {
           var select = d3.select(document.createElement('select'))
             .attr({
               'class'            : 'selectpicker',
-              'data-width'       : '100px',
+              'data-width'       : '100%',
               'data-container'   : 'body',
               'data-style'       : 'btn-xs',
               'data-size'        : '10',
