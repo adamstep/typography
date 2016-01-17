@@ -17,7 +17,7 @@ body {
   float: left;
   padding-right: 40px;
   color: #aaa;
-  width: 130px;
+  width: 140px;
 }
 .playground .control-group {
   position: relative;
@@ -39,7 +39,7 @@ body {
   position: absolute;
   right: 0;
 }
-.playground .control-panel .control-group.hidden h5:after {
+.playground .control-panel .control-group.close h5:after {
   content: '+';
 }
 .playground .control-panel .controls {
@@ -47,7 +47,7 @@ body {
   max-height: 500px;
   overflow: hidden;
 }
-.playground .control-panel .control-group.hidden .controls {
+.playground .control-panel .control-group.close .controls {
   max-height: 0;
 }
 .playground .control-panel label {
@@ -55,9 +55,14 @@ body {
   font-size: 10px;
   font-family: sans-serif;
 }
-.playground .control-panel input, .playground .control-panel select {
+.playground .control-panel input,
+.playground .control-panel select,
+.playground .control-panel .btn-group {
   opacity: 0.5;
   display: block;
+}
+.playground .control-panel .btn-group input {
+  display: none;
 }
 .playground .posts {
   width: 600px;

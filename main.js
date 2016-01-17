@@ -51,12 +51,18 @@ var typefaces = [
   {label: "Fira Mono", value: "Fira Mono"},
 ];
 
+
+function typefaceOption(t) {
+    return '<span style="font-family:' + t.value + '">' + t.label + '</span>';
+}
+
 var alignments = [
-  {label: "Left", value: "left"},
-  {label: "Center", value: "center"},
-  {label: "Right", value: "right"},
-  {label: "Justify", value: "justify"},
+  {icon: "glyphicon-align-left", value: "left"},
+  {icon: "glyphicon-align-center", value: "center"},
+  {icon: "glyphicon-align-right", value: "right"},
+  {icon: "glyphicon-align-justify", value: "justify"},
 ];
+
 
 var controlGroups = [
     {
@@ -64,8 +70,8 @@ var controlGroups = [
         id: 'headline',
         hidden: false,
         controls: [
-            {label : 'Typeface'      , id : 'fontFamily' , type : 'select' , options: typefaces, value: 'Lato'} ,
-            {label : 'Alignment'     , id : 'textAlign'  , type : 'select' , options: alignments, value: 'left'} ,
+            {label : 'Typeface'      , id : 'fontFamily' , type : 'select' , options: typefaces, customOption: typefaceOption, value: 'Lato'} ,
+            {label : 'Alignment'     , id : 'textAlign'  , type : 'buttonGroup' , options: alignments, value: 'left'} ,
             {label : 'Size'          , id : 'fontSize'   , type : 'range'  , min : 10 , max : 72  , step : 1, value: 24} ,
             {label : 'Margin Top'    , id : 'marginTop'     , type : 'range'  , min : 10 , max : 72  , step : 1, value: 0} ,
             {label : 'Margin Bottom' , id : 'marginBottom'  , type : 'range'  , min : 0  , max : 100 , step : 1, value: 20} ,
@@ -76,8 +82,8 @@ var controlGroups = [
         id: 'byline',
         hidden: true,
         controls: [
-            {label : 'typeface'      , id : 'fontFamily' , type : 'select' , options: typefaces, value: 'Lato'} ,
-            {label : 'Alignment'     , id : 'textAlign'  , type : 'select' , options: alignments, value: 'left'} ,
+            {label : 'Typeface'      , id : 'fontFamily' , type : 'select' , options: typefaces, customOption: typefaceOption, value: 'Lato'} ,
+            {label : 'Alignment'     , id : 'textAlign'  , type : 'buttonGroup' , options: alignments, value: 'left'} ,
             {label : 'Size'          , id : 'fontSize'     , type : 'range' , min : 10 , max : 72  , step : 1, value: 14} ,
             {label : 'Margin Top'    , id : 'marginTop'    , type : 'range' , min : 10 , max : 72  , step : 1, value: 0} ,
             {label : 'Margin Bottom' , id : 'marginBottom' , type : 'range' , min : 0  , max : 100 , step : 1, value: 5} ,
@@ -88,8 +94,8 @@ var controlGroups = [
         id: 'dateline',
         hidden: true,
         controls: [
-            {label : 'typeface'      , id : 'fontFamily' , type : 'select' , options: typefaces, value: 'Lato'} ,
-            {label : 'Alignment'     , id : 'textAlign'  , type : 'select' , options: alignments, value: 'left'} ,
+            {label : 'Typeface'      , id : 'fontFamily' , type : 'select' , options: typefaces, customOption: typefaceOption, value: 'Lato'} ,
+            {label : 'Alignment'     , id : 'textAlign'  , type : 'buttonGroup' , options: alignments, value: 'left'} ,
             {label : 'Size'          , id : 'fontSize'     , type : 'range' , min : 10 , max : 72  , step : 1, value: 14} ,
             {label : 'Margin Top'    , id : 'marginTop'    , type : 'range' , min : 10 , max : 72  , step : 1, value: 0} ,
             {label : 'Margin Bottom' , id : 'marginBottom' , type : 'range' , min : 0  , max : 100 , step : 1, value: 0} ,
@@ -100,8 +106,8 @@ var controlGroups = [
         id: 'body',
         hidden: true,
         controls: [
-            {label : 'typeface'      , id : 'fontFamily' , type : 'select' , options: typefaces, value: 'Lato'} ,
-            {label : 'Alignment'     , id : 'textAlign'  , type : 'select' , options: alignments, value: 'left'} ,
+            {label : 'Typeface'      , id : 'fontFamily' , type : 'select' , options: typefaces, customOption: typefaceOption, value: 'Lato'} ,
+            {label : 'Alignment'     , id : 'textAlign'  , type : 'buttonGroup' , options: alignments, value: 'left'} ,
             {label : 'Size'          , id : 'fontSize'     , type : 'range' , min : 10 , max : 72  , step : 1, value: 14} ,
             {label : 'Margin Top'    , id : 'marginTop'    , type : 'range' , min : 10 , max : 72  , step : 1, value: 0} ,
             {label : 'Margin Bottom' , id : 'marginBottom' , type : 'range' , min : 0  , max : 100 , step : 1, value: 20} ,
@@ -154,22 +160,33 @@ function updateControls(playgroundSelector, data) {
         .selectAll('.control').data(function(d) { return d.controls; });
 
     // GROUP ENTER + UPDATE
-    controlGroups.classed('hidden', function(d) {
+    controlGroups.classed('close', function(d) {
       return d.hidden;
     });
 
     // CONTROL ENTER
     var controlsEnter = controls.enter().append('div').attr('class', 'control');
     controlsEnter.append('label').text(function(d) { return d.label; });
-    controlsEnter.append(function(d) {
+    controlsEnter.append(function(d, controlIndex, controlGroupIndex) {
         switch(d.type) {
         case 'select':
-          var select = d3.select(document.createElement('select'));
+          var select = d3.select(document.createElement('select'))
+            .attr({
+              'class'            : 'selectpicker',
+              'data-width'       : '100px',
+              'data-container'   : 'body',
+              'data-style'       : 'btn-xs',
+              'data-size'        : '10',
+              'data-dropup-auto' : 'false',
+            });
           d.options.forEach(function(t) {
-            select.append('option')
+            var option = select.append('option')
               .attr('value', t.value)
               .property('selected', d.value == t.value)
               .text(t.label);
+            if (d.customOption) {
+                option.attr('data-content', d.customOption(t));
+            }
           });
           return select.node();
         case 'range':
@@ -180,6 +197,19 @@ function updateControls(playgroundSelector, data) {
             .attr('step', d.step)
             .attr('value', d.value)
             .node();
+        case 'buttonGroup':
+          var group = d3.select(document.createElement('form'))
+            .append('div')
+              .attr('class', 'btn-group');
+          d.options.forEach(function(t) {
+            var button = group.append('label')
+              .attr({type: 'button', class: 'btn btn-default btn-xs'});
+            button.append('input')
+              .attr({type: 'radio', value: t.value, name: controlGroupIndex + ':' + controlIndex + ':' + d.id});
+            button.append('span')
+                .attr({class: 'glyphicon ' + t.icon});
+          });
+          return group.node();
         }
     });
     controlsEnter.each(function(d, controlIndex, controlGroupIndex) {
@@ -192,7 +222,7 @@ function updateControls(playgroundSelector, data) {
       updateText(playgroundSelector, text)
     });
     controlsEnter.on('change', function(d, controlIndex, controlGroupIndex) {
-      var value = this.querySelector('select').value;
+      var value = this.querySelector('select, input:checked').value;
       updateStyle(value, controlIndex, controlGroupIndex);
       updateText(playgroundSelector, text)
     });
