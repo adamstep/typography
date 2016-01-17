@@ -133,8 +133,8 @@ function initialize(playgroundSelector, controlGroups, text) {
     playground.append('div').attr('class', 'control-panel');
     playground.append('div').attr('class', 'posts');
 
-    updateControls('.playground', controlGroups);
-    updateText('.playground', text);
+    updateControls(playgroundSelector, controlGroups);
+    updateText(playgroundSelector, text);
 }
 
 function updateControls(playgroundSelector, data) {
