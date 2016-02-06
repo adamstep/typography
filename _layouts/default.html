@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% include head.html %}
+<body>
+  {% include header.html %}
+  
+  {{ content }}
+  
+{% include footer.html %}
+{% if page.blocks %}
+<script>
+  {% for block in page.blocks %}
+    {% if block.playground %}
+      initialize('.{{ block.playground }}', controlGroups, text);
+    {% endif %}
+  {% endfor %}
+</script>
+{% endif %}
+</body>

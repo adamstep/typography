@@ -1,31 +1,23 @@
-<!DOCTYPE html>
-<head>
-  <meta charset="UTF-8" />
-  <title>Typography Playground</title>
-  <link href='lib/bootstrap/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/css/bootstrap-select.min.css">
-  <link href='main.css' rel='stylesheet' type='text/css'>
-</head>
-
-<body>
-  <div class="content">
-    <h2>Pairing Fonts</h2>
-    <p>Try pairing a serif with a sans-serif.</p>
-    <p>Here are some combinations to start you off:</p>
-    <ul>
-      <li>Lato and Merriweather</li>
-      <li>Alegreya and Karla</li>
-    </ul>
-  </div>
-  <div class="playground playground1"></div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.js"></script>
-  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/js/bootstrap-select.min.js"></script>
-  <script src="main.js"></script>
-  <script>
-    initialize('.playground1', controlGroups, text);
-  </script>
-
-</body>
+---
+title: Pairing Fonts
+blocks:
+  - |
+    Try pairing a serif with a sans-serif.
+    
+    Here are some combinations to start you off:
+    
+    * Lato and Merriweather
+    * Alegreya and Karla
+        
+  - playground: playground1
+---
+<div class="content">
+  <h2>{{ page.title }}</h2>
+</div>
+{% for block in page.blocks %}
+  {% if block.playground %}
+    <div class="playground {{ block.playground }}"></div>  
+  {% else %}
+    <div class="content">{{ block | markdownify }}</div>
+  {% endif %}
+{% endfor %}
